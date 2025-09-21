@@ -109,7 +109,7 @@ class UserController extends Controller {
     }
     
     function delete($id){
-        if($this->UserModel->delete($id)){
+        if($this->UsersModel->delete($id)){
             redirect();
         }else{
             echo "Error in deleting user.";
