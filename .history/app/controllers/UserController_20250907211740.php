@@ -14,49 +14,13 @@ class UserController extends Controller {
 
     public function index()
     {
-        // Current page
-        $page = 1;
-        if (isset($_GET['page']) && !empty($_GET['page'])) {
-            $page = $this->io->get('page');
-        }
-
-        // Search query
-        $q = '';
-        if (isset($_GET['q']) && !empty($_GET['q'])) {
-            $q = trim($this->io->get('q'));
-        }
-
-        $records_per_page = 5;
-
-        
-        $all = $this->UserModel->page($q, $records_per_page, $page);
-        $data['users'] = $all['records'];
-        $total_rows = $all['total_rows'];
-
-        // Pagination 
-        
-        $this->pagination->set_options([
-            'first_link'     => '⏮ First',
-            'last_link'      => 'Last ⏭',
-            'next_link'      => 'Next →',
-            'prev_link'      => '← Prev',
-            'page_delimiter' => '&page='
-        ]);
-       
-        $this->pagination->set_theme('default');
-        
-        $this->pagination->initialize(
-            $total_rows,
-            $records_per_page,
-            $page,
-            site_url() . '?q=' . urlencode($q)
-        );
-        $data['page'] = $this->pagination->paginate();
+        $this->call->model('UserModel');
+        $data['users'] = $this->UserModel-> All();
 
         $this->call->view('users/index', $data);
     }
 
-    function create(){
+    public function create(){
         if($this->io->method() == 'post'){
             $first_name = $this->io->post('first_name');
             $last_name = $this->io->post('last_name');
@@ -97,7 +61,7 @@ class UserController extends Controller {
                 'email' => $email
             ];
 
-            if($this->UsersModel->update($id, $data)){
+            if($this->UserModel->update($id, $data)){
                 redirect();
             }else{
                 echo "Error in updating user.";
@@ -109,12 +73,10 @@ class UserController extends Controller {
     }
     
     function delete($id){
-        if($this->UsersModel->delete($id)){
+        if($this->UserModel->delete($id)){
             redirect();
         }else{
             echo "Error in deleting user.";
         }
     }
-
-    
 }
