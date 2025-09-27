@@ -43,18 +43,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |
 */
 
-$router->match('/', 'UserController::register', ['GET','POST']);
-
-// Auth routes
-$router->match('/reg/register', 'UserController::register', ['GET','POST']);
-$router->match('/reg/login', 'UserController::login', ['GET','POST']);
-$router->get('/reg/logout', 'UserController::logout');
-
-// Homepage (after login)
+$router->get('/', 'UserController::index');
 $router->get('/users', 'UserController::index');
-$router->get('/users/dashboard', 'UserController::dashboard');
-
-// Users CRUD
 $router->match('/users/create', 'UserController::create', ['GET', 'POST']);
 $router->match('/users/update/{id}', 'UserController::update', ['GET', 'POST']);
 $router->get('/users/delete/{id}', 'UserController::delete');

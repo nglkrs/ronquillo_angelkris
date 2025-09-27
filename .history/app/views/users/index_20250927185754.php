@@ -8,6 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* Pagination Styling */
+     
     .pagination {
       display: flex;
       gap: 0.5rem;
@@ -18,7 +20,7 @@
     .pagination a {
       display: inline-block;
       padding: 0.5rem 1rem;
-      background-color: #ec4899;
+      background-color: #ec4899; /* Tailwind pink-500 */
       color: white;
       border-radius: 0.5rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -27,12 +29,12 @@
       transition: background-color 0.2s ease-in-out;
     }
     .pagination a:hover {
-      background-color: #db2777;
+      background-color: #db2777; /* Tailwind pink-600 */
     }
     .pagination strong {
       display: inline-block;
       padding: 0.5rem 1rem;
-      background-color: #be185d;
+      background-color: #be185d; /* Tailwind pink-700 */
       color: white;
       border-radius: 0.5rem;
       font-weight: 600;
@@ -45,35 +47,21 @@
 
   <!-- Navbar -->
   <nav class="bg-gradient-to-r from-pink-600 to-pink-400 shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between">
+    <div class="max-w-7xl mx-auto px-6 py-4">
       <a href="#" class="text-white font-semibold text-xl tracking-wide">📊 User Management</a>
-      <a href="<?=site_url('auth/logout');?>" class="text-white font-medium hover:underline">Logout</a>
     </div>
   </nav>
 
   <!-- Main Content -->
   <div class="max-w-6xl mx-auto mt-10 px-4">
     <div class="bg-white bg-opacity-90 backdrop-blur-sm shadow-xl rounded-2xl p-6">
-
-      <!-- Logged In User Display -->
-      <?php if(!empty($logged_in_user)): ?>
-        <div class="mb-6 bg-pink-100 text-pink-800 px-4 py-3 rounded-lg shadow">
-          <strong>Welcome:</strong> 
-          <span class="font-medium"><?= html_escape($logged_in_user['first_name']); ?></span> 
-          (Role: <span class="font-semibold"><?= html_escape($logged_in_user['role']); ?></span>)
-        </div>
-      <?php else: ?>
-        <div class="mb-6 bg-red-100 text-red-700 px-4 py-3 rounded-lg shadow">
-          Logged in user not found
-        </div>
-      <?php endif; ?>
-
+      
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-pink-600">👥 User Directory</h1>
 
         <!-- Search Bar -->
-        <form method="get" action="<?=site_url('users');?>" class="flex">
+        <form method="get" action="<?=site_url()?>" class="flex">
           <input 
             type="text" 
             name="q" 
@@ -92,10 +80,9 @@
           <thead>
             <tr class="bg-gradient-to-r from-pink-600 to-pink-400 text-white">
               <th class="py-3 px-4">ID</th>
-             
-              <th class="py-3 px-4">Username</th>
+              <th class="py-3 px-4">Lastname</th>
+              <th class="py-3 px-4">Firstname</th>
               <th class="py-3 px-4">Email</th>
-              <th class="py-3 px-4">Role</th>
               <th class="py-3 px-4">Action</th>
             </tr>
           </thead>
@@ -103,22 +90,20 @@
             <?php foreach(html_escape($users) as $user): ?>
               <tr class="hover:bg-pink-50 transition duration-200">
                 <td class="py-3 px-4"><?=($user['id']);?></td>
-               
-                <td class="py-3 px-4"><?=($user['username']);?></td>
-                
+                <td class="py-3 px-4"><?=($user['last_name']);?></td>
+                <td class="py-3 px-4"><?=($user['first_name']);?></td>
                 <td class="py-3 px-4">
                   <span class="bg-pink-100 text-pink-700 text-sm font-medium px-3 py-1 rounded-full">
                     <?=($user['email']);?>
                   </span>
                 </td>
-                <td class="py-3 px-4 font-medium">
-                  <?=($user['role']);?>
-                </td>
                 <td class="py-3 px-4 space-x-3">
+                  <!-- Update Button -->
                   <a href="<?=site_url('users/update/'.$user['id']);?>"
                      class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-400 text-white hover:bg-pink-500 transition duration-200 shadow">
                     ✏️ Update
                   </a>
+                  <!-- Delete Button -->
                   <a href="<?=site_url('users/delete/'.$user['id']);?>"
                      onclick="return confirm('Are you sure you want to delete this record?');"
                      class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-200 shadow">

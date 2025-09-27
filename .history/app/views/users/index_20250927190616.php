@@ -92,8 +92,8 @@
           <thead>
             <tr class="bg-gradient-to-r from-pink-600 to-pink-400 text-white">
               <th class="py-3 px-4">ID</th>
-             
-              <th class="py-3 px-4">Username</th>
+              <th class="py-3 px-4">Lastname</th>
+              <th class="py-3 px-4">Firstname</th>
               <th class="py-3 px-4">Email</th>
               <th class="py-3 px-4">Role</th>
               <th class="py-3 px-4">Action</th>
@@ -103,8 +103,8 @@
             <?php foreach(html_escape($users) as $user): ?>
               <tr class="hover:bg-pink-50 transition duration-200">
                 <td class="py-3 px-4"><?=($user['id']);?></td>
-               
-                <td class="py-3 px-4"><?=($user['username']);?></td>
+                <td class="py-3 px-4"><?=($user['last_name']);?></td>
+                <td class="py-3 px-4"><?=($user['first_name']);?></td>
                 
                 <td class="py-3 px-4">
                   <span class="bg-pink-100 text-pink-700 text-sm font-medium px-3 py-1 rounded-full">
